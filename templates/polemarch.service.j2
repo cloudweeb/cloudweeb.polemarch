@@ -1,0 +1,19 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=Polemarch Service HTTP Server
+After=network.target remote-fs.target nss-lookup.target redis.service
+
+[Service]
+Type=forking
+ExecStart={{ polemarch_main_dir }}/bin/polemarchctl webserver
+ExecReload={{ polemarch_main_dir }}/bin/polemarchctl webserver reload={{ polemarch_main_dir }}/pid/polemarch.pid
+ExecStop={{ polemarch_main_dir }}/bin/polemarchctl webserver stop={{ polemarch_main_dir }}/pid/polemarch.pid
+PIDFile={{ polemarch_main_dir }}/pid/polemarch.pid
+User={{ polemarch_user }}
+Group={{ polemarch_group }}
+KillSignal=SIGCONT
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+{{ ansible_managed | comment }}
+
+{% for config in polemarch_configuration_maps %}
+{%  if config is defined and config|length %}
+[{{ config.section }}]
+{%    for k, v in config.options|dictsort -%}
+{{ k }} = {{ v }}
+{%    endfor %}
+
+{%  endif %}
+{% endfor %}

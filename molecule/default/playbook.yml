@@ -1,0 +1,49 @@
+---
+- name: Converge
+  hosts: all
+
+  vars:
+
+    polemarch_db_name: polemarch_db
+    polemarch_db_user: polemarch_user
+    polemarch_db_pass: password
+
+    polemarch_database_config:
+      section: database
+      options:
+        engine: django.db.backends.mysql
+        name: '{{ polemarch_db_name }}'
+        user: '{{ polemarch_db_user }}'
+        password: '{{ polemarch_db_pass }}'
+
+    mariadb_root_password: "{{ lookup('password', '/tmp/mariadb_root_password length=15 chars=ascii_letters,digits,hexdigits') }}"
+
+    mariadb_packages:
+      - MariaDB-shared
+
+    mariadb_databases:
+      - name: '{{ polemarch_db_name }}'
+        state: present
+
+    mariadb_users:
+      - name: '{{ polemarch_db_user }}'
+        password: '{{ polemarch_db_pass }}'
+        priv: "{{ polemarch_db_name }}.*:ALL"
+        state: present
+
+    polemarch_cache_config:
+      section: cache
+      options:
+        backend: django_redis.cache.RedisCache
+        location: redis://127.0.0.1:6379/1
+
+  roles:
+
+    - role: geerlingguy.repo-epel
+      when: ansible_os_family == 'RedHat'
+
+    - cloudweeb.mariadb
+
+    - geerlingguy.redis
+
+    - cloudweeb.polemarch

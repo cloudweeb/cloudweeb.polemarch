@@ -1,0 +1,15 @@
+---
+
+polemarch_packages:
+  - python36
+  - python36
+  - python36-virtualenv
+  - gcc
+  - openssl-devel
+  - libyaml-devel
+  - krb5-devel
+  - krb5-libs
+  - openldap-devel
+  - mysql-devel
+  - git
+  - sshpass

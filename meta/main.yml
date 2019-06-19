@@ -1,0 +1,18 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: polemarch
+  author: Agnesius Santo Naibaho
+  description: Ansible role to install Polemarch
+  company: Cloudweeb
+  license: MIT
+  min_ansible_version: 2.7
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: Debian
+      versions:
+        - stretch
+  galaxy_tags: []

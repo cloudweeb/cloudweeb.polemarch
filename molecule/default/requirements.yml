@@ -1,0 +1,6 @@
+---
+
+- src: geerlingguy.repo-epel
+- src: geerlingguy.redis
+- src: cloudweeb.mariadb
+- src: geerlingguy.rabbitmq

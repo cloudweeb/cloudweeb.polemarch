@@ -1,0 +1,64 @@
+---
+
+- name: Include OS-specific variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Add polemarch user
+  user:
+    name: '{{ polemarch_user }}'
+    system: true
+    home: '{{ polemarch_main_dir }}'
+
+- name: Install polemarch packages
+  package:
+    name: '{{ polemarch_packages }}'
+    state: present
+
+- name: Install polemarch python packages
+  pip:
+    name: '{{ polemarch_base_packages }}'
+    virtualenv: '{{ polemarch_main_dir }}'
+    virtualenv_command: virtualenv-3.6
+  become: true
+  become_user: polemarch
+
+- name: Create polemarch system directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ polemarch_user }}'
+    group: '{{ polemarch_group }}'
+  loop: '{{ polemarch_system_dir }}'
+
+- name: Configure polemarch
+  template:
+    src: polemarch_settings.ini.j2
+    dest: /etc/polemarch/settings.ini
+    owner: '{{ polemarch_user }}'
+    group: '{{ polemarch_group }}'
+  notify: restart polemarch
+
+- name: polemarch migrations
+  command: /opt/polemarch/bin/polemarchctl migrate
+  become: true
+  become_user: '{{ polemarch_user }}'
+  changed_when: false
+
+- name: Create a systemd configuration file for polemarch
+  template:
+    src: polemarch.service.j2
+    dest: /etc/systemd/system/polemarch.service
+  notify: restart polemarch
+
+- name: Start & enable polemarch
+  systemd:
+    name: polemarch
+    state: started
+    enabled: true
+    daemon_reload: true
