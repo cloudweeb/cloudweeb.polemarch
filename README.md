@@ -1,6 +1,8 @@
 Cloudweeb Polemarch
 =========
 
+[![Build Status](https://travis-ci.com/cloudweeb/cloudweeb.polemarch.svg?branch=master)](https://travis-ci.com/cloudweeb/cloudweeb.polemarch)
+
 Ansible role to install Polemarch 
 
 Requirements
