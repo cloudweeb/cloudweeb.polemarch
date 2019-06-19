@@ -5,11 +5,10 @@ services: docker
 env:
   matrix:
     - MOLECULE_DISTRO: centos7
-    - MOLECULE_DISTRO: debian9
 
 install:
   # Install test dependencies.
-  - pip install molecule docker
+  - pip install testinfra molecule docker
 
 script:
   # Run tests.

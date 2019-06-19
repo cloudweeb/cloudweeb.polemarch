@@ -19,6 +19,7 @@
     mariadb_root_password: "{{ lookup('password', '/tmp/mariadb_root_password length=15 chars=ascii_letters,digits,hexdigits') }}"
 
     mariadb_packages:
+      - MariaDB-devel
       - MariaDB-shared
 
     mariadb_databases:

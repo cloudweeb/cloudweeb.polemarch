@@ -1,7 +1,7 @@
 Cloudweeb Polemarch
 =========
 
-your description
+Ansible role to install Polemarch 
 
 Requirements
 ------------
@@ -113,6 +113,7 @@ Example Playbook
 ----------------
 
 Installing Polemarch with standard installation
+
 ```YAML
 ---
 - name: Converge
@@ -158,6 +159,7 @@ Installing Polemarch with standard installation
 ```
 
 Installing Polemarch with redis cache
+
 ```YAML
 ---
 - name: Converge
