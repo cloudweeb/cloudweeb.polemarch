@@ -11,7 +11,7 @@
 
 - name: (Pre Install) Install IUS (CentOS) repo.
   yum:
-    name: http://dl.iuscommunity.org/pub/ius/stable/CentOS/{{ ansible_distribution_major_version }}/{{ ansible_userspace_architecture }}/ius-release-1.0-13.ius.centos{{ ansible_distribution_major_version }}.noarch.rpm
+    name: https://centos7.iuscommunity.org/ius-release.rpm
     state: present
   when: ansible_distribution == "CentOS"
 
