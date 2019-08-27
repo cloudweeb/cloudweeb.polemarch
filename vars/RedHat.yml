@@ -10,5 +10,5 @@ polemarch_packages:
   - krb5-devel
   - krb5-libs
   - openldap-devel
-  - git
+  - git2u
   - sshpass
